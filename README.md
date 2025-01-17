@@ -11,3 +11,5 @@ scroll down to 'cexen' comment
 same link is in 'requirements.txt'
 
 the original simpleaudio package gives error when playing audio
+
+![aumetronom](imgs/aumetronom_app.png)
