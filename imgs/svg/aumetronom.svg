@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="127.99999"
+   height="128"
+   viewBox="0 0 33.866664 33.866667"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1">
+    <rect
+       style="fill:none;stroke:none;stroke-width:0.529167;stroke-dasharray:none"
+       id="rect4"
+       width="33.866665"
+       height="33.866669"
+       x="0"
+       y="-2.6130458e-06" />
+    <path
+       id="path7"
+       style="display:inline;fill:#d45500;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none"
+       d="M 25.846822,23.430016 C 23.830818,15.364452 20.891089,3.6159383 20.659721,2.7631388 20.305054,1.455874 19.082039,1.3229166 19.082039,1.3229166 h -2.148706 -2.148706 v 0 c 0,0 -1.223015,0.1329574 -1.577681,1.4402222 C 12.975578,3.6159384 10.035848,15.364452 8.0198443,23.430017" />
+    <path
+       id="path9"
+       style="display:inline;fill:#803300;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none"
+       d="m 8.0198443,23.430017 c -1.0743484,4.298219 -1.8863686,7.55052 -1.8863686,7.55052 0,0 -0.1346239,1.563213 1.392163,1.563213 1.526787,0 9.4076943,-0.03049 9.4076943,-0.03049 0,0 7.880908,0.03049 9.407694,0.03049 1.526787,0 1.392164,-1.563213 1.392164,-1.563213 0,0 -0.81202,-3.252301 -1.886369,-7.550521" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none"
+       d="m 8.0198443,23.430017 17.8269777,-1e-6"
+       id="path10" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none"
+       d="m 15.428169,15.038374 3.010327,-3e-6"
+       id="path10-5" />
+    <path
+       style="fill:#d45500;stroke:#000000;stroke-width:1.56104;stroke-linecap:round;stroke-dasharray:none"
+       d="M 16.933333,22.577692 25.077492,3.7741126"
+       id="path11" />
+    <circle
+       style="fill:#000000;stroke:none;stroke-width:2.64496;stroke-linecap:round;stroke-dasharray:none"
+       id="path12"
+       cx="24.157188"
+       cy="5.8989482"
+       r="1.9565418" />
+    <text
+       xml:space="preserve"
+       style="font-size:7.78181px;fill:#000000;stroke:none;stroke-width:3.82605;stroke-linecap:round;stroke-dasharray:none"
+       x="12.902355"
+       y="31.019053"
+       id="text12"><tspan
+         id="tspan12"
+         style="font-weight:bold;stroke-width:3.82605"
+         x="12.902355"
+         y="31.019053">🕉</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none"
+       d="m 15.428169,10.578526 3.010327,-3e-6"
+       id="path13" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none"
+       d="m 15.428169,5.758133 3.010327,-3e-6"
+       id="path14" />
+  </g>
+</svg>

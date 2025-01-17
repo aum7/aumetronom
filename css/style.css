@@ -1,0 +1,55 @@
+button {
+  background-color: transparent;
+  padding: 0;
+  margin: 7px;
+  font-size: 24px;
+  font-family: "Ubuntu";
+}
+
+label,
+spinbutton {
+  background-color: transparent;
+  font-size: 24px;
+  font-family: "Ubuntu";
+}
+
+.button-play {
+  color: dodgerblue;
+}
+
+.button-stop {
+  color: darkorange;
+}
+
+.label-tempo {
+  background-color: forestgreen;
+  font-size: 100px;
+  font-family: "Ubuntu";
+}
+
+.label-temponame {
+  background-color: forestgreen;
+  font-size: 30px;
+  font-family: "Ubuntu";
+  padding-bottom: 10px;
+}
+
+.label-beat {
+  background-color: dodgerblue;
+  font-size: 100px;
+  font-family: "Ubuntu";
+}
+
+/* font-family: "VictorMono NFM"; */
+/* /* create a box class */
+/* .box { */
+/*   background-color: khaki; */
+/* } */
+/* .box-tsignature, */
+/* .box-play { */
+/*   /* Inherit color from parent element */
+/*   color: inherit; */
+/* } */
+/* spinbutton { */
+/* padding-top: 5px; */
+/* } */
