@@ -204,7 +204,7 @@ a beats numerator of time signature
 
     def on_toggle_play(self, widget):
         self.running = not self.running
-        print(f"self.running : {self.running}")
+        # print(f"self.running : {self.running}")
 
         if self.running:
             self.btn_play.set_label("stop")
