@@ -223,7 +223,7 @@ a beats numerator of time signature
     def run_metronome(self):
         # simpleaudio
         accent = simpleaudio.WaveObject.from_wave_file("audio/glass.wav")
-        beat = simpleaudio.WaveObject.from_wave_file("audio/stick.wav")
+        beat = simpleaudio.WaveObject.from_wave_file("audio/rim.wav")
         while not self.stop_event.is_set():
             for i in range(self.beats):
                 if self.stop_event.is_set():
