@@ -6,36 +6,38 @@
 import gi
 import time
 import threading
-import sys
 import simpleaudio  # type: ignore
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
-from gi.repository import Gtk, Gdk, Adw, Gio  # type: ignore
+from gi.repository import Gtk, Gdk, GLib  # type: ignore
 
 
 class MainWindow(Gtk.ApplicationWindow):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, application):
+        super().__init__(application=application)
 
-        self.css_provider = Gtk.CssProvider()
-        self.css_provider.load_from_path("./css/style.css")
-        self.display = Gdk.Display.get_default()
-        Gtk.StyleContext.add_provider_for_display(
-            self.display,
-            self.css_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-        # self.set_default_size(500, 300)
-        icon_path = "/home/mua/.local/share/icons/hicolor/128x128/apps/aumetronom.svg"
-        # self.set_icon(Gio.FileIcon.new(Gio.File.new_for_path(icon_path)))
+        self.set_default_size(400, 200)
+        self.set_title("aumetronom")
+
+        # proper thread shutdown
+        self.connect("close-request", self.on_close_app)
         # hotkey for exit
         key_controller = Gtk.EventControllerKey()
-        key_controller.connect("key-pressed", self.on_close_app)
+        key_controller.connect("key-pressed", self.on_key_pressed)
         self.add_controller(key_controller)
-        # constants
+
+        css_provider = Gtk.CssProvider()
+        css_provider.load_from_path("css/style.css")
+        display = Gdk.Display.get_default()
+        if display is not None:
+            Gtk.StyleContext.add_provider_for_display(
+                display,
+                css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+            )
         # event to stop metronome
         self.stop_event = threading.Event()
+        # constants
         self.running = False
         self.beats = 4
         self.bpm = 60
@@ -197,10 +199,18 @@ a beats numerator of time signature
         self.lbl_temponame.set_text(f"{self.temponame}")
 
     def on_beats_changed(self, widget):
-        self.beats = self.spn_beats.get_value_as_int()
-        if self.running:
-            self.on_toggle_play(widget)
-            self.on_toggle_play(widget)
+        new_beats = self.spn_beats.get_value_as_int()
+        if self.running and new_beats != self.beats:
+            # stop current metronome thread
+            self.stop_event.set()
+            self.metronome_thread.join()
+            # update beats & restart
+            self.beats = new_beats
+            self.stop_event.clear()
+            self.metronome_thread = threading.Thread(target=self.run_metronome)
+            self.metronome_thread.start()
+        else:
+            self.beats = new_beats
 
     def on_toggle_play(self, widget):
         self.running = not self.running
@@ -224,43 +234,57 @@ a beats numerator of time signature
         # simpleaudio
         accent = simpleaudio.WaveObject.from_wave_file("audio/glass.wav")
         beat = simpleaudio.WaveObject.from_wave_file("audio/rim.wav")
+        current_play_obj = None
         while not self.stop_event.is_set():
             for i in range(self.beats):
                 if self.stop_event.is_set():
+                    # stop if playing
+                    if current_play_obj and current_play_obj.is_playing():
+                        current_play_obj.stop()
                     break
+                # stop previous sound if playing
+                if current_play_obj and current_play_obj.is_playing():
+                    current_play_obj.stop()
+                # play new sound
                 if i == 0:
-                    accent_obj = accent.play()
-                    accent_obj.wait_done()
-                    accent_obj.stop()
+                    current_play_obj = accent.play()
                 else:
-                    beat_obj = beat.play()
-                    beat_obj.wait_done()
-                    beat_obj.stop()
-                self.lbl_beat.set_text(f"{i+1}")
+                    current_play_obj = beat.play()
+                # update ui safely
+                GLib.idle_add(self.lbl_beat.set_text, f"{i+1}")
                 time.sleep(60 / self.bpm)
 
-    def on_close_app(self, controller, keyval, keycode, state):
+    def on_key_pressed(self, controller, keyval, keycode, state):
+        """handle keyboard events"""
         key = Gdk.keyval_name(keyval)
         if key == "Escape":
-            print("closing app ...")
-            self.close()
+            self.on_close_app()
             return True
+        return False
+
+    def on_close_app(self, *args):
+        """handle cleanup when exitiong through any method"""
+        print("closing app ...")
+        # stop metronome if running
+        if self.running:
+            self.running = False
+            self.stop_event.set()
+            if hasattr(self, "metronome_thread"):
+                self.metronome_thread.join(timeout=0.5)
+        self.close()
+
         return False
 
 
 class AumetronomApp(Gtk.Application):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self):
+        super().__init__(application_id="org.aumetronom.app")
         self.connect("activate", self.on_activate)
-        self.style_manager = Adw.StyleManager.get_default()
-        self.style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
 
     def on_activate(self, app):
         self.win = MainWindow(application=app)
         self.win.present()
 
 
-app = AumetronomApp(
-    application_id="org.aumetronom.app",
-)
-app.run(sys.argv)
+app = AumetronomApp()
+app.run(None)
