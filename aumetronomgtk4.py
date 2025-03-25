@@ -3,21 +3,19 @@
 # simpleaudio fix for py.3.12 (see 'cexen' commentt):
 # https://github.com/hamiltron/py-simple-audio/issues/72
 # flake8: noqa: E402, F401
-import gi
 import time
 import threading
 import sys
 import simpleaudio  # type: ignore
+import gi
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
-from gi.repository import Gtk, Gdk, Adw, Gio  # type: ignore
+from gi.repository import Gtk, Gdk  # type: ignore
 
 
 class MainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.css_provider = Gtk.CssProvider()
         self.css_provider.load_from_path("./css/style.css")
         self.display = Gdk.Display.get_default()
@@ -26,13 +24,8 @@ class MainWindow(Gtk.ApplicationWindow):
             self.css_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
-        # self.set_default_size(500, 300)
-        icon_path = "/home/mua/.local/share/icons/hicolor/128x128/apps/aumetronom.svg"
-        # self.set_icon(Gio.FileIcon.new(Gio.File.new_for_path(icon_path)))
-        # hotkey for exit
-        key_controller = Gtk.EventControllerKey()
-        key_controller.connect("key-pressed", self.on_close_app)
-        self.add_controller(key_controller)
+        self.set_default_size(500, 300)
+        # icon_path = "/home/mua/.local/share/icons/hicolor/128x128/apps/aumetronom.svg"
         # constants
         # event to stop metronome
         self.stop_event = threading.Event()
@@ -97,10 +90,8 @@ beats per minute = tempo speed
         # time signature entries
         self.lbl_tSign = Gtk.Label(label="beats : ")
         self.lbl_tSign.set_tooltip_text(
-            """
-a beats numerator of time signature
-[tab] = next, [shift-tab] = previous field
-            """
+            """ a beats numerator of time signature
+[tab] = next, [shift-tab] = previous field """
         )
         # append
         self.box_controls.append(self.lbl_tSign)
@@ -205,7 +196,6 @@ a beats numerator of time signature
     def on_toggle_play(self, widget):
         self.running = not self.running
         # print(f"self.running : {self.running}")
-
         if self.running:
             self.btn_play.set_label("stop")
             self.btn_play.remove_css_class("button-play")
@@ -236,24 +226,14 @@ a beats numerator of time signature
                     beat_obj = beat.play()
                     beat_obj.wait_done()
                     beat_obj.stop()
-                self.lbl_beat.set_text(f"{i+1}")
+                self.lbl_beat.set_text(f"{i + 1}")
                 time.sleep(60 / self.bpm)
-
-    def on_close_app(self, controller, keyval, keycode, state):
-        key = Gdk.keyval_name(keyval)
-        if key == "Escape":
-            print("closing app ...")
-            self.close()
-            return True
-        return False
 
 
 class AumetronomApp(Gtk.Application):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.connect("activate", self.on_activate)
-        self.style_manager = Adw.StyleManager.get_default()
-        self.style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
 
     def on_activate(self, app):
         self.win = MainWindow(application=app)
