@@ -24,6 +24,7 @@ class MainWindow(Gtk.ApplicationWindow):
             self.css_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
+        self.set_title("aumetronom")
         self.set_default_size(100, -1)
         # icon_path = "/home/mua/.local/share/icons/hicolor/scalable/apps/org.aumetro.app.svg"
         # constants

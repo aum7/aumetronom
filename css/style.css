@@ -1,15 +1,15 @@
 button {
   background-color: transparent;
-  padding: 7px;
+  padding: 5px;
   margin: 3px;
-  font-size: 24px;
+  font-size: 16px;
   font-family: "Ubuntu";
 }
 
 label,
 spinbutton {
   background-color: transparent;
-  font-size: 24px;
+  font-size: 16px;
   font-family: "Ubuntu";
 }
 
@@ -23,7 +23,7 @@ spinbutton {
 
 .label-tempo {
   background-color: forestgreen;
-  font-size: 50px;
+  font-size: 40px;
   font-family: "Ubuntu";
 }
 
@@ -31,7 +31,7 @@ spinbutton {
   background-color: forestgreen;
   font-size: 25px;
   font-family: "Ubuntu";
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .label-beat {
@@ -39,17 +39,3 @@ spinbutton {
   font-size: 60px;
   font-family: "Ubuntu";
 }
-
-/* font-family: "VictorMono NFM"; */
-/* /* create a box class */
-/* .box { */
-/*   background-color: khaki; */
-/* } */
-/* .box-tsignature, */
-/* .box-play { */
-/*   /* Inherit color from parent element */
-/*   color: inherit; */
-/* } */
-/* spinbutton { */
-/* padding-top: 5px; */
-/* } */
