@@ -10,7 +10,7 @@ import simpleaudio  # type: ignore
 import gi
 
 gi.require_version("Gtk", "4.0")
-from gi.repository import Gtk, Gdk  # type: ignore
+from gi.repository import Gtk, Gdk, GLib  # type: ignore
 
 
 class MainWindow(Gtk.ApplicationWindow):
@@ -25,8 +25,7 @@ class MainWindow(Gtk.ApplicationWindow):
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
         self.set_default_size(100, -1)
-        # icon_path = "/home/mua/.local/share/icons/hicolor/128x128/apps/aumetronom.svg"
-        icon_path = "/home/mua/dev/"
+        # icon_path = "/home/mua/.local/share/icons/hicolor/scalable/apps/org.aumetro.app.svg"
         # constants
         # event to stop metronome
         self.stop_event = threading.Event()
@@ -109,8 +108,10 @@ tempo names (markings) are modified from wiki 'tempo'
         # paned window
         self.paned = Gtk.Paned(orientation=Gtk.Orientation.HORIZONTAL)
         self.paned.set_wide_handle(True)
+        self.paned.set_size_request(-1, -1)
         # box tempo
         self.box_tempo = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.box_tempo.set_size_request(-1, -1)
         # label top - tempo
         self.lbl_tempo = Gtk.Label(label=f"{self.bpm}")
         self.lbl_tempo.add_css_class("label-tempo")
@@ -124,6 +125,7 @@ tempo names (markings) are modified from wiki 'tempo'
         # label beat
         self.lbl_beat = Gtk.Label(label="1")
         self.lbl_beat.add_css_class("label-beat")
+        self.lbl_beat.set_size_request(-1, -1)
         # add to paned window
         self.paned.set_start_child(self.box_tempo)
         self.paned.set_resize_start_child(False)
@@ -214,6 +216,6 @@ class AumetronomApp(Gtk.Application):
 
 if __name__ == "__main__":
     app = AumetronomApp(
-        application_id="org.aumetronom.app",
+        application_id="org.aumetro.app",
     )
     app.run(None)
