@@ -24,8 +24,9 @@ class MainWindow(Gtk.ApplicationWindow):
             self.css_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
-        self.set_default_size(500, 300)
+        self.set_default_size(100, -1)
         # icon_path = "/home/mua/.local/share/icons/hicolor/128x128/apps/aumetronom.svg"
+        icon_path = "/home/mua/dev/"
         # constants
         # event to stop metronome
         self.stop_event = threading.Event()
@@ -33,13 +34,10 @@ class MainWindow(Gtk.ApplicationWindow):
         self.beats = 4
         self.bpm = 60
         self.temponame = "adagio"
-        # main grid
-        self.grid = Gtk.Grid()
-        self.grid.set_hexpand(True)
-        self.grid.set_halign(Gtk.Align.FILL)
-        self.grid.set_vexpand(True)
-        self.grid.set_valign(Gtk.Align.FILL)
-        self.set_child(self.grid)
+        # main box
+        box_main = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=3)
+        box_main.set_size_request(-1, -1)
+        self.set_child(box_main)
         # top row with time signature buttons
         self.box_controls = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=3)
         self.box_controls.set_halign(Gtk.Align.CENTER)
@@ -64,10 +62,8 @@ tempo names (markings) are modified from wiki 'tempo'
         # bpm label
         self.lbl_bpm = Gtk.Label(label="bpm : ")
         self.lbl_bpm.set_tooltip_text(
-            """
-beats per minute = tempo speed
-[tab] = next, [shift-tab] = previous field
-            """
+            """beats per minute = tempo speed
+[tab] = next, [shift-tab] = previous field"""
         )
         # bpm adjustment
         self.bpm_adjustment = Gtk.Adjustment(
@@ -90,8 +86,8 @@ beats per minute = tempo speed
         # time signature entries
         self.lbl_tSign = Gtk.Label(label="beats : ")
         self.lbl_tSign.set_tooltip_text(
-            """ a beats numerator of time signature
-[tab] = next, [shift-tab] = previous field """
+            """a beats numerator of time signature
+[tab] = next, [shift-tab] = previous field"""
         )
         # append
         self.box_controls.append(self.lbl_tSign)
@@ -107,35 +103,18 @@ beats per minute = tempo speed
         self.spn_beats.connect("value-changed", self.on_beats_changed)
         # append
         self.box_controls.append(self.spn_beats)
-        # attach to grid
-        self.grid.attach(self.box_controls, 0, 0, 1, 1)
+        # attach to main box
+        box_main.append(self.box_controls)
         #  --- bottom row ---
         # paned window
         self.paned = Gtk.Paned(orientation=Gtk.Orientation.HORIZONTAL)
         self.paned.set_wide_handle(True)
-        self.paned.set_hexpand(True)
-        self.paned.set_halign(Gtk.Align.FILL)
-        self.paned.set_vexpand(True)
-        self.paned.set_valign(Gtk.Align.FILL)
-        # center panes on init - ko
         # box tempo
         self.box_tempo = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         # label top - tempo
         self.lbl_tempo = Gtk.Label(label=f"{self.bpm}")
-        # expand label bgnd color
-        self.lbl_tempo.set_vexpand(True)
-        self.lbl_tempo.set_valign(Gtk.Align.FILL)
-        # position label text : 0-top 1-bottom
-        self.lbl_tempo.set_yalign(0.9)
-        self.lbl_tempo.set_justify(Gtk.Justification.CENTER)
         self.lbl_tempo.add_css_class("label-tempo")
-        # label bottom - tempo name
         self.lbl_temponame = Gtk.Label()
-        self.lbl_temponame.set_vexpand(True)
-        self.lbl_temponame.set_valign(Gtk.Align.FILL)
-        self.lbl_temponame.set_yalign(0.1)
-        # self.lbl_temponame.set_wrap(True)
-        self.lbl_temponame.set_justify(Gtk.Justification.CENTER)
         self.lbl_temponame.add_css_class("label-temponame")
         self.get_temponame()
         self.lbl_temponame.set_label(self.temponame)
@@ -144,21 +123,14 @@ beats per minute = tempo speed
         self.box_tempo.append(self.lbl_temponame)
         # label beat
         self.lbl_beat = Gtk.Label(label="1")
-        self.lbl_beat.set_vexpand(True)
-        self.lbl_beat.set_valign(Gtk.Align.FILL)
-        # self.lbl_beat.set_yalign(0.9)  # 0-top 1-bottom
-        self.lbl_beat.set_justify(Gtk.Justification.CENTER)
         self.lbl_beat.add_css_class("label-beat")
         # add to paned window
         self.paned.set_start_child(self.box_tempo)
         self.paned.set_resize_start_child(False)
-        self.paned.set_shrink_start_child(True)
         self.paned.set_end_child(self.lbl_beat)
         self.paned.set_resize_end_child(False)
-        # self.paned.set_resize_end_child(True)
-        self.paned.set_shrink_end_child(True)
-        # put into grid
-        self.grid.attach(self.paned, 0, 1, 1, 1)
+        # put into main box
+        box_main.append(self.paned)
 
     def get_temponame(self):
         # tempo names / markings ; modified from wiki tempo
@@ -240,7 +212,8 @@ class AumetronomApp(Gtk.Application):
         self.win.present()
 
 
-app = AumetronomApp(
-    application_id="org.aumetronom.app",
-)
-app.run(sys.argv)
+if __name__ == "__main__":
+    app = AumetronomApp(
+        application_id="org.aumetronom.app",
+    )
+    app.run(None)

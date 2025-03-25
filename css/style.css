@@ -1,7 +1,7 @@
 button {
   background-color: transparent;
-  padding: 0;
-  margin: 7px;
+  padding: 7px;
+  margin: 3px;
   font-size: 24px;
   font-family: "Ubuntu";
 }
@@ -23,20 +23,20 @@ spinbutton {
 
 .label-tempo {
   background-color: forestgreen;
-  font-size: 100px;
+  font-size: 50px;
   font-family: "Ubuntu";
 }
 
 .label-temponame {
   background-color: forestgreen;
-  font-size: 30px;
+  font-size: 25px;
   font-family: "Ubuntu";
   padding-bottom: 10px;
 }
 
 .label-beat {
   background-color: dodgerblue;
-  font-size: 100px;
+  font-size: 60px;
   font-family: "Ubuntu";
 }
 
