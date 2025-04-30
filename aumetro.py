@@ -195,13 +195,9 @@ tempo names (markings) are modified from wiki 'tempo'
                     break
                 if i == 0:
                     accent_obj = accent.play()
-                    accent_obj.wait_done()
-                    accent_obj.stop()
                 else:
                     beat_obj = beat.play()
-                    beat_obj.wait_done()
-                    beat_obj.stop()
-                self.lbl_beat.set_text(f"{i + 1}")
+                GLib.idle_add(self.lbl_beat.set_text, f"{i + 1}")
                 time.sleep(60 / self.bpm)
 
 
