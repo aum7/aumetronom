@@ -1,11 +1,10 @@
 # code inspired by :
 # https://medium.com/@jackhuang.wz/building-a-metronome-in-python-c8e16826fe4f
-# simpleaudio fix for py.3.12 (see 'cexen' commentt):
+# simpleaudio fix for py.3.12 (see 'cexen' comment):
 # https://github.com/hamiltron/py-simple-audio/issues/72
 # flake8: noqa: E402, F401
 import time
 import threading
-import sys
 import simpleaudio  # type: ignore
 import gi
 
@@ -26,7 +25,6 @@ class MainWindow(Gtk.ApplicationWindow):
         )
         self.set_title("aumetronom")
         self.set_default_size(100, -1)
-        # icon_path = "/home/mua/.local/share/icons/hicolor/scalable/apps/org.aumetro.app.svg"
         # constants
         # event to stop metronome
         self.stop_event = threading.Event()
@@ -52,7 +50,6 @@ this will move focus between bpm & [play] & beats
 when focus on bpm or beats : arrow up / down : change value
 when focus on [play] : [space] will toggle play / stop metronome
 mouse-over & mouse-scroll will also change bpm & beats value
-esc : quit application
 
 note :
 tempo names (markings) are modified from wiki 'tempo'
